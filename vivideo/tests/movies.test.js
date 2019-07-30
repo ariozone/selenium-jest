@@ -19,7 +19,6 @@ describe("Vivideo", () => {
 
   it("should have a list of movies", async () => {
     await driver.wait(until.elementLocated(page.locators.movies))
-
     const movies = await driver.findElements(page.locators.movies)
     const firstMovie = await movies[0].getText()
     assert(movies.length > 0)
