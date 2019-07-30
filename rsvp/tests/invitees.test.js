@@ -1,25 +1,27 @@
 const { Browser, Key, until, By } = require("selenium-webdriver")
 const assert = require("assert")
 const webdriver = require("selenium-webdriver")
-const { rsvp: url } = require("../../config.json")
+const RsvpPage = require("../pages/rsvp")
 
 describe("RSVP", () => {
   let driver
+  let page
 
   beforeAll(async () => {
     driver = new webdriver.Builder().forBrowser("chrome").build()
-    await driver.get(url)
+    page = new RsvpPage(driver)
+    await page.open()
   })
   afterAll(async () => {
     await driver.quit()
   })
 
   it("should have an invitee list", async () => {
-    const elements = await driver.findElements(By.id("invitedList"))
+    const elements = await driver.findElements(page.locators.invitedList)
     assert(elements.length > 0)
   })
   it("should have a registration form", async () => {
-    const elements = await driver.findElements(By.id("registrar"))
+    const elements = await driver.findElements(page.locators.registrationForm)
     assert(elements.length > 0)
   })
 })
