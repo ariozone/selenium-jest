@@ -22,6 +22,14 @@ describe("RSVP", () => {
   })
   it("should have a registration form", async () => {
     const elements = await driver.findElements(page.locators.registrationForm)
-    assert(elements.length > 0)
+    //assert(elements.length > 0)
+    expect(elements.length).toBeGreaterThan(0)
+  })
+  it("should load existing invitations", async () => {
+    await driver.manage().setTimeouts({ implicit: 3000 })
+    const elements = await driver.findElements(page.locators.invitees)
+    const text = await elements[1].getText()
+    assert(text.includes("Craig Dennis"))
+    expect(text).toMatch("Craig Dennis")
   })
 })
